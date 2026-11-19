@@ -93,7 +93,7 @@ export function Modal({
         // Clique no fundo escurecido (fora do conteúdo) fecha.
         if (e.target === ref.current && !bloqueado) aoFechar()
       }}
-      className="m-auto w-[calc(100%-2rem)] max-w-md rounded-3xl border border-line bg-card p-0 text-ink backdrop:bg-ink/50"
+      className="m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md overflow-y-auto overscroll-contain rounded-3xl border border-line bg-card p-0 text-ink backdrop:bg-black/60"
     >
       <div className="p-6">
         <h2 id={idTitulo} className="text-xl font-semibold">

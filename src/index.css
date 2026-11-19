@@ -14,9 +14,14 @@
   --color-teal: #1f7a6e;
   --color-teal-dark: #174f48;
   --color-teal-soft: #e2f0ee;
+  /* Fundo de botão com texto branco ao passar o mouse */
+  --color-teal-hover: #174f48;
 
   --color-coral: #a8432d;
   --color-coral-soft: #f6e1da;
+  /* Fundo do botão de perigo (texto branco) */
+  --color-coral-forte: #a8432d;
+  --color-coral-forte-hover: #8c3725;
 
   /* Faixa "Atenção" (sempre acompanhada de texto, nunca só cor) */
   --color-amber: #8a5a00;
@@ -37,6 +42,63 @@
       transform: scale(1);
     }
   }
+}
+
+/* ---------- Conforto visual: tema "suave" (escuro, pouco brilho) ----------
+   Vale quando a pessoa escolhe "Suave", ou quando escolhe "Sistema" e o aparelho está no modo escuro.
+   Todos os pares de texto foram medidos: ≥ 4,5:1 (bordas de controles ≥ 3:1). */
+:root[data-tema='suave'] {
+  --color-ink: #ece8e1;
+  --color-paper: #161a22;
+  --color-paper2: #222833;
+  --color-card: #1c212a;
+  --color-line: #2f3542;
+  --color-line-strong: #7c8494;
+  --color-muted: #b4b8c2;
+  --color-teal: #1f7a6e;
+  --color-teal-hover: #186358;
+  --color-teal-dark: #8ed6ca;
+  --color-teal-soft: #173532;
+  --color-coral: #f2a08b;
+  --color-coral-soft: #3d2522;
+  --color-coral-forte: #b0452e;
+  --color-coral-forte-hover: #963a26;
+  --color-amber: #e8bc63;
+  --color-amber-soft: #3a311d;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema='clara']) {
+    --color-ink: #ece8e1;
+    --color-paper: #161a22;
+    --color-paper2: #222833;
+    --color-card: #1c212a;
+    --color-line: #2f3542;
+    --color-line-strong: #7c8494;
+    --color-muted: #b4b8c2;
+    --color-teal: #1f7a6e;
+    --color-teal-hover: #186358;
+    --color-teal-dark: #8ed6ca;
+    --color-teal-soft: #173532;
+    --color-coral: #f2a08b;
+    --color-coral-soft: #3d2522;
+    --color-coral-forte: #b0452e;
+    --color-coral-forte-hover: #963a26;
+    --color-amber: #e8bc63;
+    --color-amber-soft: #3a311d;
+    color-scheme: dark;
+  }
+}
+
+/* ---------- Conforto visual: tamanho do texto ----------
+   O layout é todo em rem, então espaços e botões crescem junto com o texto. */
+:root[data-texto='grande'] {
+  font-size: 112.5%;
+}
+
+:root[data-texto='maior'] {
+  font-size: 125%;
 }
 
 /* ---------- Base ---------- */

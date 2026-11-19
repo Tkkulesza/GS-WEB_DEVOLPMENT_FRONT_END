@@ -34,7 +34,7 @@ export function BotaoModoCalma({ cancelamentoAtivo, aoAtivar, aoDesativar }: Bot
         type="button"
         onClick={aoAtivar}
         aria-describedby={idLegenda}
-        className="flex min-h-20 w-full items-center justify-center gap-3 rounded-3xl bg-teal px-6 font-display text-2xl font-semibold text-white hover:bg-teal-dark"
+        className="flex min-h-20 w-full items-center justify-center gap-3 rounded-3xl bg-teal px-6 font-display text-2xl font-semibold text-white hover:bg-teal-hover"
       >
         <svg viewBox="0 0 24 24" className="size-7" fill="none" aria-hidden="true">
           <path

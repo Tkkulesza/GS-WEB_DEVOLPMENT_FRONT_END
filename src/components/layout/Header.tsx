@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { Icone } from '../ui/Icone'
+import { AjustesVisuais } from './AjustesVisuais'
 import { NavBar } from './NavBar'
 
 export function Header() {
@@ -18,20 +19,23 @@ export function Header() {
 
         <NavBar variante="topo" className="hidden lg:block" />
 
-        <NavLink
-          to="/sobre"
-          className={({ isActive }) =>
-            [
-              'flex min-h-11 items-center gap-2 rounded-2xl px-3 font-semibold',
-              isActive
-                ? 'bg-teal-soft text-teal-dark'
-                : 'text-muted hover:bg-paper2 hover:text-ink',
-            ].join(' ')
-          }
-        >
-          <Icone nome="info" className="size-5" />
-          Sobre
-        </NavLink>
+        <div className="flex items-center gap-1">
+          <AjustesVisuais />
+          <NavLink
+            to="/sobre"
+            className={({ isActive }) =>
+              [
+                'flex min-h-11 items-center gap-2 rounded-2xl px-3 font-semibold',
+                isActive
+                  ? 'bg-teal-soft text-teal-dark'
+                  : 'text-muted hover:bg-paper2 hover:text-ink',
+              ].join(' ')
+            }
+          >
+            <Icone nome="info" className="size-5" />
+            Sobre
+          </NavLink>
+        </div>
       </div>
     </header>
   )

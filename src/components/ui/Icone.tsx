@@ -6,6 +6,7 @@ const CAMINHOS = {
   dados: 'M12 3.5 5 6.5v5c0 4.2 3 7.6 7 9 4-1.4 7-4.8 7-9v-5zM9 12l2 2 4-4',
   info: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8h.01',
   ondas: 'M6 10v4M10 7v10M14 9v6M18 11v2',
+  ajustes: 'M4 7h10M18 7h2M4 17h4M12 17h8M16 5v4M10 15v4',
 } as const
 
 export type NomeIcone = keyof typeof CAMINHOS

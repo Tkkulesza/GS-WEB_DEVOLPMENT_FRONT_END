@@ -44,7 +44,7 @@ export function DecibelGauge({ db, limite, faixa }: DecibelGaugeProps) {
           fill="none"
           strokeWidth="16"
           strokeLinecap="round"
-          className="stroke-paper2"
+          className="stroke-muted/25"
         />
         <path
           d={ARCO}

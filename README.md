@@ -73,7 +73,7 @@ Faixas de exibição: **Tranquilo** (db < limite − 5), **Atenção** (limite �
 - **Vite + React 19 + TypeScript** (`strict: true`)
 - **Tailwind CSS v4** (`@tailwindcss/vite`), tema em `@theme` no `src/index.css`
 - **react-router-dom** (rotas), **zod** (validação de entrada e de respostas da API)
-- **vitest** (104 testes unitários), **ESLint** + **Prettier**
+- **vitest** (141 testes unitários), **ESLint** + **Prettier**
 - Sem biblioteca de componentes e sem biblioteca de gráfico: tudo feito com componentes próprios e Tailwind
 
 ### Camadas
@@ -114,7 +114,7 @@ Os 4 hooks principais pedidos:
 | `usePerfis`       | CRUD de perfis com auditoria (`perfil_criado`, `perfil_editado`, `perfil_excluido`) e exclusão em cascata.                                     |
 | `useRegistros`    | Lista com filtros, `stats` (de `domain/stats.ts`), editar nota e excluir.                                                                      |
 
-E mais 8 hooks de apoio: `useFormularioPerfil` (etapas e validação do cadastro), `useNotaEditavel` (nota com debounce de 600 ms), `useMeusDados` (exportar e excluir tudo), `usePerfilAtivo`, `useMonitor`, `useToast` (acesso aos contextos), `useTituloPagina` e `useFocoAoNavegar` (título e foco por rota).
+E mais 9 hooks de apoio: `usePreferencias` (tema e tamanho do texto), `useFormularioPerfil` (etapas e validação do cadastro), `useNotaEditavel` (nota com debounce de 600 ms), `useMeusDados` (exportar e excluir tudo), `usePerfilAtivo`, `useMonitor`, `useToast` (acesso aos contextos), `useTituloPagina` e `useFocoAoNavegar` (título e foco por rota).
 
 ---
 
@@ -254,6 +254,7 @@ Meta: **WCAG 2.1 AA**. O público é PcD.
 - **Anúncios** com `aria-live="polite"`, nunca `assertive`: mudança de faixa, proteção ligada e desligada, avisos.
 - **Interface sensorialmente segura (RNF03)**: nenhum som, nenhum flash, nada piscando. A respiração guiada tem ciclo de 10 s, e todas as animações param com `prefers-reduced-motion`.
 - **Nunca só cor**: faixas com texto e forma; seleção com ✓; página atual sublinhada.
+- **Conforto visual** (botão "Ajustes" no topo): tela **Suave** (escura, com menos brilho) ou **Clara**, ou igual ao aparelho; **tamanho do texto** Normal, Grande ou Maior. A escolha fica salva só neste navegador. Os dois temas foram medidos (texto ≥ 4,5:1) e auditados com axe.
 - **Alvos de toque** ≥ 44 px, **textos** ≥ 16 px, HTML semântico, `lang="pt-BR"` e título por rota.
 - **Tom de voz** calmo e direto, sem exclamação e sem culpar a pessoa ("Não conseguimos falar com o servidor. Vamos tentar de novo?").
 

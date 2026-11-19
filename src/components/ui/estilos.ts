@@ -9,10 +9,10 @@ const BASE_BOTAO =
   'inline-flex items-center justify-center gap-2 rounded-2xl font-semibold text-center transition-colors disabled:cursor-not-allowed disabled:opacity-60'
 
 const VARIANTES: Record<VarianteBotao, string> = {
-  primary: 'bg-teal text-white hover:bg-teal-dark',
+  primary: 'bg-teal text-white hover:bg-teal-hover',
   secondary: 'border-2 border-teal bg-card text-teal-dark hover:bg-teal-soft',
   ghost: 'text-teal-dark hover:bg-teal-soft',
-  danger: 'bg-coral text-white hover:bg-[#8c3725]',
+  danger: 'bg-coral-forte text-white hover:bg-coral-forte-hover',
   'danger-ghost': 'text-coral hover:bg-coral-soft',
 }
 
