@@ -16,6 +16,10 @@
   --color-coral: #a8432d;
   --color-coral-soft: #f6e1da;
 
+  /* Faixa "Atenção" (sempre acompanhada de texto, nunca só cor) */
+  --color-amber: #8a5a00;
+  --color-amber-soft: #f6ecd6;
+
   --font-sans: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Rubik', ui-sans-serif, system-ui, sans-serif;
 }
