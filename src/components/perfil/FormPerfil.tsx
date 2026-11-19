@@ -51,14 +51,13 @@ export function FormPerfil({
   const tituloRef = useRef<HTMLHeadingElement>(null)
   const idTitulo = useId()
   const idErroSons = useId()
-  const primeiraRenderizacao = useRef(true)
+  // Compara com a etapa anterior (no StrictMode o efeito roda duas vezes ao montar).
+  const etapaAnterior = useRef(etapa)
 
   // A cada etapa, o foco vai para o título (o leitor de tela anuncia a pergunta nova).
   useEffect(() => {
-    if (primeiraRenderizacao.current) {
-      primeiraRenderizacao.current = false
-      return
-    }
+    if (etapaAnterior.current === etapa) return
+    etapaAnterior.current = etapa
     tituloRef.current?.focus()
   }, [etapa])
 

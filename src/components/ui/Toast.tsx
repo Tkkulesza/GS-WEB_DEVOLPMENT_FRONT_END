@@ -70,7 +70,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       <div
         aria-live="polite"
         aria-atomic="false"
-        className="pointer-events-none fixed inset-x-0 bottom-24 z-50 flex justify-center px-4 lg:top-20 lg:right-4 lg:bottom-auto lg:left-auto lg:justify-end"
+        className="pointer-events-none fixed inset-x-0 bottom-24 z-50 flex justify-center px-4 lg:right-6 lg:bottom-6 lg:left-auto lg:justify-end"
       >
         <ul className="pointer-events-auto flex w-full max-w-md flex-col gap-2">
           {itens.map((item) => (

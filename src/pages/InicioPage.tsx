@@ -6,12 +6,12 @@ import { FaixaBadge } from '../components/monitor/FaixaBadge'
 import { SeletorCenario } from '../components/monitor/SeletorCenario'
 import { SeletorFonte } from '../components/monitor/SeletorFonte'
 import { StatusBadge } from '../components/monitor/StatusBadge'
+import { CarregandoPagina } from '../components/layout/CarregandoPagina'
 import { AvisoErro } from '../components/ui/AvisoErro'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { EmptyState } from '../components/ui/EmptyState'
 import { classesBotao } from '../components/ui/estilos'
-import { Spinner } from '../components/ui/Spinner'
 import { ROTULO_FAIXA, classificarFaixa } from '../domain/rules'
 import { useMonitor } from '../hooks/useMonitor'
 import { usePerfilAtivo } from '../hooks/usePerfilAtivo'
@@ -23,27 +23,33 @@ export function InicioPage() {
   const { monitor, protecao, cenario, setCenario, escolherFonte } = useMonitor()
 
   if (carregando) {
+    return <CarregandoPagina titulo="Início" rotulo="Carregando seu perfil" />
+  }
+
+  if (erro) {
     return (
-      <div className="flex justify-center py-12 text-teal-dark">
-        <Spinner rotulo="Carregando seu perfil" className="size-8" />
-      </div>
+      <>
+        <h1 className="sr-only">Início</h1>
+        <AvisoErro mensagem={erro} aoTentarDeNovo={recarregar} />
+      </>
     )
   }
 
-  if (erro) return <AvisoErro mensagem={erro} aoTentarDeNovo={recarregar} />
-
   if (!perfilAtivo) {
     return (
-      <EmptyState
-        icone="ondas"
-        titulo="Vamos começar pelo seu perfil"
-        descricao="Com ele, o Hearmony sabe até onde o som fica confortável pra você e liga o cancelamento sozinho."
-        acao={
-          <Link to="/perfis/novo" className={classesBotao('primary', 'lg')}>
-            Criar meu perfil
-          </Link>
-        }
-      />
+      <>
+        <h1 className="sr-only">Início</h1>
+        <EmptyState
+          icone="ondas"
+          titulo="Vamos começar pelo seu perfil"
+          descricao="Com ele, o Hearmony sabe até onde o som fica confortável pra você e liga o cancelamento sozinho."
+          acao={
+            <Link to="/perfis/novo" className={classesBotao('primary', 'lg')}>
+              Criar meu perfil
+            </Link>
+          }
+        />
+      </>
     )
   }
 

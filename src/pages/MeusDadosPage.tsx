@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CabecalhoPagina } from '../components/layout/CabecalhoPagina'
+import { CarregandoPagina } from '../components/layout/CarregandoPagina'
 import { formatarDataCompleta } from '../components/historico/formatos'
 import { AvisoErro } from '../components/ui/AvisoErro'
 import { Button } from '../components/ui/Button'
@@ -66,11 +67,7 @@ export function MeusDadosPage() {
   }
 
   if (carregando) {
-    return (
-      <div className="flex justify-center py-12 text-teal-dark">
-        <Spinner rotulo="Carregando" className="size-8" />
-      </div>
-    )
+    return <CarregandoPagina titulo="Meus dados" />
   }
 
   return (

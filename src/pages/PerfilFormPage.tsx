@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { CabecalhoPagina } from '../components/layout/CabecalhoPagina'
+import { CarregandoPagina } from '../components/layout/CarregandoPagina'
 import { FormPerfil } from '../components/perfil/FormPerfil'
 import { AvisoErro } from '../components/ui/AvisoErro'
 import { EmptyState } from '../components/ui/EmptyState'
 import { classesBotao } from '../components/ui/estilos'
-import { Spinner } from '../components/ui/Spinner'
 import type { Perfil } from '../domain/types'
 import { TOTAL_ETAPAS, useFormularioPerfil } from '../hooks/useFormularioPerfil'
 import { usePerfilAtivo } from '../hooks/usePerfilAtivo'
@@ -82,11 +82,7 @@ export function PerfilFormPage() {
   }
 
   if (carregando) {
-    return (
-      <div className="flex justify-center py-12 text-teal-dark">
-        <Spinner rotulo="Carregando perfil" className="size-8" />
-      </div>
-    )
+    return <CarregandoPagina titulo={titulo} rotulo="Carregando perfil" />
   }
 
   if (erro) {
@@ -101,16 +97,19 @@ export function PerfilFormPage() {
   const perfil = perfis.find((p) => p.id === id)
   if (!perfil) {
     return (
-      <EmptyState
-        icone="perfis"
-        titulo="Não encontramos esse perfil"
-        descricao="Ele pode ter sido excluído."
-        acao={
-          <Link to="/perfis" className={classesBotao('primary', 'md')}>
-            Ver perfis
-          </Link>
-        }
-      />
+      <>
+        <h1 className="sr-only">{titulo}</h1>
+        <EmptyState
+          icone="perfis"
+          titulo="Não encontramos esse perfil"
+          descricao="Ele pode ter sido excluído."
+          acao={
+            <Link to="/perfis" className={classesBotao('primary', 'md')}>
+              Ver perfis
+            </Link>
+          }
+        />
+      </>
     )
   }
 

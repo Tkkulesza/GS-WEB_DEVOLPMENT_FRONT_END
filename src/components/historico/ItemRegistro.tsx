@@ -31,7 +31,7 @@ export function ItemRegistro({ registro, aoEditarNota, aoExcluir }: ItemRegistro
       <p className="mt-1">{detalhes.join(' · ')}</p>
 
       {!ehAlerta && (
-        <p className={`mt-3 rounded-2xl p-3 ${registro.nota ? 'bg-paper' : 'text-muted'}`}>
+        <p className={`mt-3 rounded-2xl ${registro.nota ? 'bg-paper p-3' : 'text-muted'}`}>
           {registro.nota ? (
             <>
               <span className="sr-only">Sua nota: </span>“{registro.nota}”

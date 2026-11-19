@@ -27,10 +27,10 @@ export function NavBar({ variante, className = '' }: NavBarProps) {
               end={item.fim}
               className={({ isActive }) =>
                 [
-                  'flex min-h-11 items-center justify-center rounded-2xl font-semibold transition-colors',
+                  'flex min-h-11 items-center rounded-2xl font-semibold transition-colors',
                   inferior
-                    ? 'min-h-16 flex-col gap-1 px-1 text-base leading-tight'
-                    : 'gap-2 px-4 py-2 text-base',
+                    ? 'min-h-16 flex-col justify-start gap-1 px-1 pt-2 pb-1 text-base leading-tight'
+                    : 'justify-center gap-2 px-4 py-2 text-base',
                   isActive
                     ? 'bg-teal-soft text-teal-dark'
                     : 'text-muted hover:bg-paper2 hover:text-ink',

@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CabecalhoPagina } from '../components/layout/CabecalhoPagina'
+import { CarregandoPagina } from '../components/layout/CarregandoPagina'
 import { FiltroGatilho, type ValorFiltro } from '../components/historico/FiltroGatilho'
 import { formatarDiaHora } from '../components/historico/formatos'
 import { GraficoSemana } from '../components/historico/GraficoSemana'
@@ -63,11 +64,7 @@ export function HistoricoPage() {
   }
 
   if (carregandoPerfis) {
-    return (
-      <div className="flex justify-center py-12 text-teal-dark">
-        <Spinner rotulo="Carregando" className="size-8" />
-      </div>
-    )
+    return <CarregandoPagina titulo="Histórico" />
   }
 
   if (!perfilAtivo) {
