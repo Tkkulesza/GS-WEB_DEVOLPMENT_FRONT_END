@@ -1,21 +1,23 @@
 import { Link } from 'react-router-dom'
-import { CabecalhoPagina } from '../components/layout/CabecalhoPagina'
+import { EmptyState } from '../components/ui/EmptyState'
+import { classesBotao } from '../components/ui/estilos'
 import { useTituloPagina } from '../hooks/useTituloPagina'
 
 export function NotFoundPage() {
   useTituloPagina('Página não encontrada')
   return (
     <>
-      <CabecalhoPagina
+      <h1 className="sr-only">Página não encontrada</h1>
+      <EmptyState
+        icone="info"
         titulo="Essa página não existe"
-        descricao="O endereço pode ter mudado. Você pode voltar para o início."
+        descricao="O endereço pode ter mudado ou ter sido digitado de outro jeito. Tudo bem: você pode voltar para o início."
+        acao={
+          <Link to="/" className={classesBotao('primary', 'lg')}>
+            Voltar para o início
+          </Link>
+        }
       />
-      <Link
-        to="/"
-        className="inline-flex min-h-11 items-center rounded-2xl bg-teal px-5 font-semibold text-white hover:bg-teal-dark"
-      >
-        Voltar para o início
-      </Link>
     </>
   )
 }
