@@ -97,6 +97,28 @@ export function comLista<T>(schema: z.ZodType<T>): Parser<ListaValidada<T>> {
   }
 }
 
+/**
+ * Valida o corpo ANTES de enviar. Mesmo com o formulário validado,
+ * o service confere de novo para nada inválido chegar à API.
+ */
+export function validarEntrada<T>(schema: z.ZodType<T>, dados: unknown): T {
+  const r = schema.safeParse(dados)
+  if (!r.success) {
+    throw new ApiError('requisicao', 0, r.error.issues[0]?.message ?? MENSAGENS.requisicao)
+  }
+  return r.data
+}
+
+/** Ignora 404 (o dado já não existe) e repassa os outros erros. */
+export async function ignorarNaoEncontrado(promessa: Promise<unknown>): Promise<void> {
+  try {
+    await promessa
+  } catch (erro) {
+    if (ehApiError(erro) && erro.tipo === 'nao_encontrado') return
+    throw erro
+  }
+}
+
 // ---------- Requisição ----------
 
 export type MetodoHttp = 'GET' | 'POST' | 'PUT' | 'DELETE'
