@@ -5,6 +5,7 @@ import {
   LimiteSchema,
   PerfilInputSchema,
   SonsGatilhoSchema,
+  erroOutroSom,
   errosPorCampo,
 } from '../domain/schemas'
 import type { Perfil, PerfilInput } from '../domain/types'
@@ -16,6 +17,7 @@ export type Etapa = 1 | 2 | 3 | 4
 export interface ValoresFormPerfil {
   apelido: string
   sonsGatilho: SomId[]
+  outroSom: string
   limiteDb: number
   responsavelNome: string
   responsavelContato: string
@@ -29,6 +31,7 @@ export type ErrosFormPerfil = Partial<Record<CampoFormPerfil, string>>
 const ETAPA_DO_CAMPO: Record<CampoFormPerfil, Etapa> = {
   apelido: 1,
   sonsGatilho: 2,
+  outroSom: 2,
   limiteDb: 3,
   responsavelNome: 4,
   responsavelContato: 4,
@@ -40,6 +43,7 @@ export function valoresIniciais(perfil?: Perfil | null): ValoresFormPerfil {
   return {
     apelido: perfil?.apelido ?? '',
     sonsGatilho: perfil?.sonsGatilho ?? [],
+    outroSom: perfil?.outroSom ?? '',
     limiteDb: perfil?.limiteDb ?? LIMITE_PADRAO_DB,
     responsavelNome: perfil?.responsavelNome ?? '',
     responsavelContato: perfil?.responsavelContato ?? '',
@@ -60,8 +64,12 @@ function validarEtapa(etapa: Etapa, v: ValoresFormPerfil): ErrosFormPerfil {
       return erro ? { apelido: erro } : {}
     }
     case 2: {
+      const erros: ErrosFormPerfil = {}
       const erro = primeiroErro(SonsGatilhoSchema.safeParse(v.sonsGatilho))
-      return erro ? { sonsGatilho: erro } : {}
+      if (erro) erros.sonsGatilho = erro
+      const erroOutro = erroOutroSom(v.sonsGatilho, v.outroSom)
+      if (erroOutro) erros.outroSom = erroOutro
+      return erros
     }
     case 3: {
       const erro = primeiroErro(LimiteSchema.safeParse(v.limiteDb))

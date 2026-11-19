@@ -22,3 +22,31 @@ export function estimarDb(rms: number): number {
   const estimado = dbfs + MICROFONE_OFFSET_DB
   return Math.round(Math.min(MICROFONE_MAX_DB, Math.max(MICROFONE_MIN_DB, estimado)))
 }
+
+// ---------- Microfone do fone ----------
+
+/**
+ * Palavras que costumam aparecer no nome de microfones de fone (Bluetooth ou com fio).
+ * O microfone do fone fica perto do ouvido, então estima melhor o que a pessoa escuta.
+ */
+const PALAVRAS_FONE = [
+  'headset',
+  'headphone',
+  'earphone',
+  'earbud',
+  'buds',
+  'airpods',
+  'pods',
+  'hands-free',
+  'handsfree',
+  'mãos livres',
+  'maos livres',
+  'ag audio',
+  'bluetooth',
+]
+
+export function pareceMicrofoneDeFone(nome: string): boolean {
+  const n = nome.toLowerCase()
+  // "fone" só como palavra inteira: "Microfone" não é fone.
+  return /(^|[^a-z])fones?([^a-z]|$)/.test(n) || PALAVRAS_FONE.some((p) => n.includes(p))
+}

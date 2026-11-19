@@ -21,7 +21,9 @@ export function CardPerfil({
   aoSelecionar,
   aoExcluir,
 }: CardPerfilProps) {
-  const sons = perfil.sonsGatilho.map((id) => ROTULO_SOM[id])
+  const sons = perfil.sonsGatilho.map((id) =>
+    id === 'outro' && perfil.outroSom ? `Outro: ${perfil.outroSom}` : ROTULO_SOM[id],
+  )
   const avisaResponsavel = podeAvisarResponsavel(perfil)
 
   return (

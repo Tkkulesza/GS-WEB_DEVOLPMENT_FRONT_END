@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { estimarDb, rmsDe } from './audio'
+import { estimarDb, pareceMicrofoneDeFone, rmsDe } from './audio'
 
 describe('rmsDe', () => {
   it('é 0 para silêncio e 1 para sinal cheio', () => {
@@ -26,4 +26,20 @@ describe('estimarDb', () => {
     expect(estimarDb(10)).toBe(110)
     expect(estimarDb(Number.NaN)).toBe(30)
   })
+})
+
+describe('pareceMicrofoneDeFone', () => {
+  it.each([
+    'Fone de ouvido (Bluetooth)',
+    'AirPods Pro Hands-Free AG Audio',
+    'Galaxy Buds2 Pro',
+    'Headset Microphone (Jabra Evolve)',
+    'Microfone (Fones de ouvido JBL)',
+    'Mãos livres (Redmi Buds)',
+  ])('"%s" é fone', (n) => expect(pareceMicrofoneDeFone(n)).toBe(true))
+
+  it.each(['Microfone (Realtek High Definition Audio)', 'Padrão', 'MacBook Pro Microphone', ''])(
+    '"%s" não é fone',
+    (n) => expect(pareceMicrofoneDeFone(n)).toBe(false),
+  )
 })

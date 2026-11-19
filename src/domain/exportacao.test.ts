@@ -8,6 +8,7 @@ const perfil: Perfil = {
   id: '1',
   apelido: 'Lu',
   sonsGatilho: ['buzina'],
+  outroSom: null,
   limiteDb: 65,
   responsavelNome: null,
   responsavelContato: null,

@@ -33,6 +33,7 @@ function registro(id: string, perfilId: string, extra: Partial<Registro> = {}): 
 const input: PerfilInput = {
   apelido: ' Lu ',
   sonsGatilho: ['buzina'],
+  outroSom: null,
   limiteDb: 65,
   responsavelNome: null,
   responsavelContato: null,

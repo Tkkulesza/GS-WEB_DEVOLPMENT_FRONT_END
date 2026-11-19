@@ -20,7 +20,8 @@ import { useTituloPagina } from '../hooks/useTituloPagina'
 export function InicioPage() {
   useTituloPagina('Início')
   const { perfilAtivo, carregando, erro, recarregar } = usePerfilAtivo()
-  const { monitor, protecao, cenario, setCenario, escolherFonte } = useMonitor()
+  const { monitor, protecao, cenario, setCenario, escolherFonte, microfones, escolherMicrofone } =
+    useMonitor()
 
   if (carregando) {
     return <CarregandoPagina titulo="Início" rotulo="Carregando seu perfil" />
@@ -84,7 +85,12 @@ export function InicioPage() {
           <h2 className="sr-only">Som ao seu redor</h2>
           <DecibelGauge db={monitor.db} limite={limite} faixa={faixa} />
           {usandoMicrofone && (
-            <p className="mt-1 text-muted">Microfone · estimativa, não calibrada</p>
+            <p className="mt-1 text-muted">
+              {microfones.find((m) => m.id === monitor.microfoneEmUso?.id)?.ehFone
+                ? 'Microfone do fone'
+                : 'Microfone'}{' '}
+              · estimativa, não calibrada
+            </p>
           )}
           <div className="mt-4 flex justify-center">
             <FaixaBadge faixa={faixa} tamanho="lg" />
@@ -135,6 +141,9 @@ export function InicioPage() {
         <SeletorFonte
           fonte={monitor.fonte}
           erroMicrofone={monitor.erroMicrofone}
+          microfones={microfones}
+          microfoneEmUso={monitor.microfoneEmUso}
+          aoEscolherMicrofone={escolherMicrofone}
           aoUsarMicrofone={() => escolherFonte('microfone')}
           aoUsarSimulador={() => escolherFonte('simulador')}
         />

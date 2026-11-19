@@ -36,7 +36,7 @@ Partes do código-fonte e a documentação desta entrega foram criados/modificad
 - **`npm run build`** (TypeScript strict + build do Vite): sem erros ao fim de todas as fases.
 - **`npm run lint`** (ESLint com typescript-eslint e react-hooks): sem erros nem avisos. Quando o lint acusou um problema (fase 14), ele foi corrigido antes de a fase ser entregue.
 - **`npm run format:check`** (Prettier): todos os arquivos formatados.
-- **`npm test`**: **141 testes em 9 arquivos**, todos passando. Eles cobrem:
+- **`npm test`**: **155 testes em 9 arquivos**, todos passando. Eles cobrem:
 
 | Arquivo              | O que cobre                                                                                                                                                                                                                                                                                  |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

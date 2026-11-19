@@ -42,6 +42,7 @@ function ligadaAutomatica(): EstadoProtecao {
 const perfilBase: PerfilInput = {
   apelido: 'Lu',
   sonsGatilho: ['buzina'],
+  outroSom: null,
   limiteDb: 70,
   responsavelNome: null,
   responsavelContato: null,

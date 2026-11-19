@@ -31,6 +31,8 @@ export const APELIDO_MAX = 30
 export const RESPONSAVEL_NOME_MAX = 60
 export const RESPONSAVEL_CONTATO_MAX = 80
 export const NOTA_MAX = 280
+/** Descrição do som quando a pessoa marca "Outro". */
+export const OUTRO_SOM_MAX = 40
 
 export const SONS = [
   { id: 'buzina', rotulo: 'Buzina' },

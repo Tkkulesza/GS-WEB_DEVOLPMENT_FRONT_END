@@ -12,6 +12,7 @@ import {
 const entradaValida = {
   apelido: '  Lu  ',
   sonsGatilho: ['buzina', 'sirene'],
+  outroSom: null,
   limiteDb: 65,
   responsavelNome: '',
   responsavelContato: '',
@@ -108,6 +109,7 @@ describe('validação de respostas da API', () => {
     id: '1',
     apelido: 'Lu',
     sonsGatilho: ['buzina'],
+    outroSom: null,
     limiteDb: 65,
     consentimentoResponsavel: false,
     consentimentoLgpd: true,
@@ -140,5 +142,45 @@ describe('validação de respostas da API', () => {
     })
     expect(r.fim).toBeNull()
     expect(r.acao).toBe('perfil_criado')
+  })
+})
+
+describe('som "Outro"', () => {
+  it('exige dizer qual é o som quando "Outro" está marcado', () => {
+    const r = PerfilInputSchema.safeParse({
+      ...entradaValida,
+      sonsGatilho: ['outro'],
+      outroSom: '',
+    })
+    expect(r.success).toBe(false)
+    if (!r.success) expect(errosPorCampo(r.error).outroSom).toMatch(/qual é o outro som/)
+  })
+
+  it('guarda a descrição com trim', () => {
+    const r = PerfilInputSchema.parse({
+      ...entradaValida,
+      sonsGatilho: ['buzina', 'outro'],
+      outroSom: '  liquidificador ',
+    })
+    expect(r.outroSom).toBe('liquidificador')
+  })
+
+  it('descarta a descrição se "Outro" não estiver marcado', () => {
+    const r = PerfilInputSchema.parse({ ...entradaValida, outroSom: 'liquidificador' })
+    expect(r.outroSom).toBeNull()
+  })
+
+  it('aceita perfil antigo da API sem o campo', () => {
+    const p = PerfilSchema.parse({
+      id: '1',
+      apelido: 'Lu',
+      sonsGatilho: ['outro'],
+      limiteDb: 65,
+      consentimentoResponsavel: false,
+      consentimentoLgpd: true,
+      criadoEm: '2026-11-18T10:00:00.000Z',
+      atualizadoEm: '2026-11-18T10:00:00.000Z',
+    })
+    expect(p.outroSom).toBeNull()
   })
 })

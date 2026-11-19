@@ -73,7 +73,7 @@ Faixas de exibição: **Tranquilo** (db < limite − 5), **Atenção** (limite �
 - **Vite + React 19 + TypeScript** (`strict: true`)
 - **Tailwind CSS v4** (`@tailwindcss/vite`), tema em `@theme` no `src/index.css`
 - **react-router-dom** (rotas), **zod** (validação de entrada e de respostas da API)
-- **vitest** (141 testes unitários), **ESLint** + **Prettier**
+- **vitest** (155 testes unitários), **ESLint** + **Prettier**
 - Sem biblioteca de componentes e sem biblioteca de gráfico: tudo feito com componentes próprios e Tailwind
 
 ### Camadas
@@ -132,17 +132,19 @@ O plano gratuito permite **1 projeto e 2 resources**. O Hearmony usa exatamente 
 1. Entre em [mockapi.io](https://mockapi.io) e crie um **projeto** (ex.: `hearmony`). Deixe o _API prefix_ como `/api/v1`.
 2. Crie o resource **`perfis`**. Apague os campos de exemplo (`name`, `avatar`, `createdAt`) e deixe só o `id`. Os demais campos são criados pelo próprio app ao salvar, mas, se quiser documentar o schema, eles são:
 
-   | campo                      | tipo no MockAPI |
-   | -------------------------- | --------------- |
-   | `apelido`                  | String          |
-   | `sonsGatilho`              | Array           |
-   | `limiteDb`                 | Number          |
-   | `responsavelNome`          | String          |
-   | `responsavelContato`       | String          |
-   | `consentimentoResponsavel` | Boolean         |
-   | `consentimentoLgpd`        | Boolean         |
-   | `criadoEm`                 | String          |
-   | `atualizadoEm`             | String          |
+   | campo         | tipo no MockAPI |
+   | ------------- | --------------- |
+   | `apelido`     | String          |
+   | `sonsGatilho` | Array           |
+
+| `outroSom` | String |
+| `limiteDb` | Number |
+| `responsavelNome` | String |
+| `responsavelContato` | String |
+| `consentimentoResponsavel` | Boolean |
+| `consentimentoLgpd` | Boolean |
+| `criadoEm` | String |
+| `atualizadoEm` | String |
 
 3. Crie o resource **`registros`**, também só com o `id`:
 
@@ -217,6 +219,7 @@ O ZIP inclui só o que está versionado: sem `node_modules`, sem `dist` e sem `.
 
 - **Minimização**: só apelido, nunca nome completo, CPF, endereço ou dado de saúde detalhado. O perfil sensorial (sons e limite) é tratado como **dado sensível** (LGPD, art. 5º, II e art. 11).
 - **Consentimento explícito**: `consentimentoLgpd` é obrigatório para salvar, e o consentimento do responsável é separado (RN05).
+- **Microfone do fone (opcional)**: com fone com microfone conectado, o app sugere usá-lo, porque ele fica perto do ouvido e estima melhor o que a pessoa escuta. A escolha não é salva (o id do aparelho poderia identificá-lo).
 - **Nunca gravar áudio** (RNF05): no modo microfone, um `AnalyserNode` lê o nível do sinal num buffer reaproveitado em memória. Não há `MediaRecorder`, nenhuma amostra é guardada, nada é enviado e nenhum som é reproduzido. As tracks são paradas ao sair do modo.
 - **Direitos do titular** em "Meus dados": **exportar** (portabilidade, art. 18, V) e **excluir tudo** (eliminação, art. 18, VI).
 - **Audit log**: criação, edição, exportação e exclusão de perfil viram registros `auditoria`. A exclusão total registra antes de apagar e depois remove tudo, inclusive a auditoria do perfil.

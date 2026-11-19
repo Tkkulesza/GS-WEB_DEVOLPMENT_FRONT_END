@@ -30,6 +30,8 @@ export interface Perfil {
   id: string
   apelido: string
   sonsGatilho: SomId[]
+  /** O que é o "Outro" som (só quando "outro" está em sonsGatilho). */
+  outroSom: string | null
   limiteDb: number
   responsavelNome: string | null
   responsavelContato: string | null

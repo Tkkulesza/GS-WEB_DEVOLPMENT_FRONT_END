@@ -14,6 +14,13 @@ interface OpcoesMonitor {
   fonte?: FonteMonitor
   cenario: CenarioId
   intervaloMs?: number
+  /** Microfone escolhido (ex.: o do fone). Sem valor, usa o padrão do aparelho. */
+  dispositivoId?: string | null
+}
+
+export interface MicrofoneEmUso {
+  id: string
+  nome: string
 }
 
 export interface NoiseMonitor {
@@ -24,6 +31,8 @@ export interface NoiseMonitor {
   /** Fonte em uso de fato (volta para "simulador" se o microfone falhar). */
   fonte: FonteMonitor
   erroMicrofone: string | null
+  /** Qual microfone está sendo usado de fato (só no modo microfone). */
+  microfoneEmUso: MicrofoneEmUso | null
   limparErroMicrofone: () => void
   /** Injeta 92 dB por 2 s (útil na apresentação). Só no simulador. */
   simularPico: () => void
@@ -56,11 +65,13 @@ export function useNoiseMonitor({
   fonte = 'simulador',
   cenario,
   intervaloMs = INTERVALO_LEITURA_MS,
+  dispositivoId = null,
 }: OpcoesMonitor): NoiseMonitor {
   const [historico, setHistorico] = useState<Leitura[]>(() => [
     { db: obterCenario(cenario).mediaDb, em: Date.now(), seq: 0 },
   ])
   const [erroMicrofone, setErroMicrofone] = useState<string | null>(null)
+  const [microfone, setMicrofone] = useState<MicrofoneEmUso | null>(null)
   const ultima = historico[historico.length - 1]
   const ultimaRef = useRef(ultima)
   const picoAteRef = useRef(0)
@@ -112,10 +123,32 @@ export function useNoiseMonitor({
         throw new DOMException('Microfone indisponível', 'NotSupportedError')
       }
       // Sem processamento do navegador: queremos o nível real do ambiente.
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
-      })
-      if (cancelado) return
+      const semProcessamento = {
+        echoCancellation: false,
+        noiseSuppression: false,
+        autoGainControl: false,
+      }
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: dispositivoId
+            ? { ...semProcessamento, deviceId: { exact: dispositivoId } }
+            : semProcessamento,
+        })
+      } catch (erro) {
+        // O microfone escolhido sumiu (ex.: fone desconectado): volta ao padrão do aparelho.
+        const sumiu =
+          erro instanceof DOMException &&
+          (erro.name === 'OverconstrainedError' || erro.name === 'NotFoundError')
+        if (!dispositivoId || !sumiu) throw erro
+        stream = await navigator.mediaDevices.getUserMedia({ audio: semProcessamento })
+      }
+      if (cancelado) {
+        stream.getTracks().forEach((t) => t.stop())
+        return
+      }
+
+      const faixa = stream.getAudioTracks()[0]
+      setMicrofone({ id: faixa?.getSettings().deviceId ?? '', nome: faixa?.label ?? '' })
 
       contexto = new AudioContext()
       await contexto.resume().catch(() => undefined)
@@ -156,7 +189,7 @@ export function useNoiseMonitor({
       stream?.getTracks().forEach((t) => t.stop())
       void contexto?.close().catch(() => undefined)
     }
-  }, [fonteEfetiva, intervaloMs, registrar])
+  }, [fonteEfetiva, intervaloMs, registrar, dispositivoId])
 
   const simularPico = useCallback(() => {
     if (fonteEfetiva !== 'simulador') return
@@ -172,6 +205,7 @@ export function useNoiseMonitor({
     historicoCurto: historico,
     fonte: fonteEfetiva,
     erroMicrofone,
+    microfoneEmUso: fonteEfetiva === 'microfone' ? microfone : null,
     limparErroMicrofone,
     simularPico,
   }

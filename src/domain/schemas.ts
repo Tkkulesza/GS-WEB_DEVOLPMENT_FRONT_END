@@ -12,6 +12,7 @@ import {
   LIMITE_MAX_DB,
   LIMITE_MIN_DB,
   NOTA_MAX,
+  OUTRO_SOM_MAX,
   RESPONSAVEL_CONTATO_MAX,
   RESPONSAVEL_NOME_MAX,
   SONS_IDS,
@@ -65,6 +66,15 @@ export const SonsGatilhoSchema = z
   .array(z.enum(SONS_IDS))
   .min(1, { error: 'Escolha pelo menos um som. Se nenhum combinar, marque "Outro".' })
 
+/** Quando "Outro" está marcado, é preciso dizer qual é o som. */
+export function erroOutroSom(sons: readonly string[], outroSom: string | null | undefined) {
+  if (!sons.includes('outro')) return undefined
+  const texto = (outroSom ?? '').trim()
+  if (texto.length < 2) return 'Conte qual é o outro som, como "liquidificador".'
+  if (texto.length > OUTRO_SOM_MAX) return `Use até ${OUTRO_SOM_MAX} caracteres.`
+  return undefined
+}
+
 export const LimiteSchema = z
   .number({ error: 'Escolha um valor no controle.' })
   .int({ error: 'Use um número inteiro.' })
@@ -81,6 +91,7 @@ export const PerfilInputSchema = z
   .object({
     apelido: ApelidoSchema,
     sonsGatilho: SonsGatilhoSchema,
+    outroSom: textoOpcional(OUTRO_SOM_MAX, `Use até ${OUTRO_SOM_MAX} caracteres.`),
     limiteDb: LimiteSchema,
     responsavelNome: textoOpcional(
       RESPONSAVEL_NOME_MAX,
@@ -101,6 +112,9 @@ export const PerfilInputSchema = z
         message: 'Para salvar, precisamos do seu consentimento.',
       })
     }
+
+    const erroOutro = erroOutroSom(p.sonsGatilho, p.outroSom)
+    if (erroOutro) ctx.addIssue({ code: 'custom', path: ['outroSom'], message: erroOutro })
 
     if (!temResponsavel(p)) return
 
@@ -137,7 +151,12 @@ export const PerfilInputSchema = z
         message: 'Para cadastrar um responsável, marque que ele concorda em receber avisos.',
       })
     }
-  }) satisfies z.ZodType<PerfilInput, unknown>
+  })
+  // Sem "Outro" marcado, a descrição não é guardada (minimização de dados).
+  .transform((p) => ({
+    ...p,
+    outroSom: p.sonsGatilho.includes('outro') ? p.outroSom : null,
+  })) satisfies z.ZodType<PerfilInput, unknown>
 
 // ---------- Entrada: nota do episódio ----------
 
@@ -153,6 +172,7 @@ export const PerfilSchema = z.object({
   id: z.string().min(1),
   apelido: z.string().min(1).max(APELIDO_MAX),
   sonsGatilho: z.array(z.enum(SONS_IDS)),
+  outroSom: nulo(z.string().max(OUTRO_SOM_MAX)),
   limiteDb: LimiteSchema,
   responsavelNome: nulo(z.string()),
   responsavelContato: nulo(z.string()),

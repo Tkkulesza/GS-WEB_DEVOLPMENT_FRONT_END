@@ -134,6 +134,24 @@ export function FormPerfil({
               idErro={idErroSons}
               erro={erros.sonsGatilho}
             />
+            {valores.sonsGatilho.includes('outro') && (
+              <Field
+                rotulo="Qual é o outro som?"
+                descricao="Ex.: liquidificador, secador de cabelo, fogos de artifício."
+                erro={erros.outroSom}
+              >
+                {(props) => (
+                  <Input
+                    {...props}
+                    value={valores.outroSom}
+                    onChange={(e) => aoAlterar('outroSom', e.target.value)}
+                    onBlur={() => aoSairDoCampo('outroSom')}
+                    maxLength={40}
+                    autoComplete="off"
+                  />
+                )}
+              </Field>
+            )}
           </div>
         )}
 
