@@ -6,6 +6,7 @@ import type {
   ErrosFormPerfil,
   ValoresFormPerfil,
 } from '../../hooks/useFormularioPerfil'
+import { formatarContato, limparNome, tipoContato } from '../../domain/contato'
 import { Button } from '../ui/Button'
 import { Checkbox } from '../ui/Checkbox'
 import { classesBotao } from '../ui/estilos'
@@ -17,6 +18,12 @@ import { StepIndicator } from './StepIndicator'
 
 const NOMES_ETAPAS = ['Apelido', 'Sons', 'Limite', 'Responsável e consentimento'] as const
 
+const DESCRICAO_CONTATO = {
+  vazio: 'Ex.: nome@exemplo.com ou (11) 98765-4321',
+  telefone: 'Vamos salvar como telefone, com DDD.',
+  email: 'Vamos salvar como e-mail.',
+} as const
+
 interface FormPerfilProps {
   modo: 'criar' | 'editar'
   etapa: Etapa
@@ -26,6 +33,8 @@ interface FormPerfilProps {
   salvando: boolean
   hrefCancelar: string
   aoAlterar: <C extends CampoFormPerfil>(campo: C, valor: ValoresFormPerfil[C]) => void
+  /** Valida o campo quando a pessoa sai dele. */
+  aoSairDoCampo: (campo: CampoFormPerfil) => void
   /** Valida e avança; devolve se avançou. */
   aoAvancar: () => boolean
   aoVoltar: () => void
@@ -43,6 +52,7 @@ export function FormPerfil({
   salvando,
   hrefCancelar,
   aoAlterar,
+  aoSairDoCampo,
   aoAvancar,
   aoVoltar,
   aoConcluir,
@@ -145,12 +155,17 @@ export function FormPerfil({
               É opcional. Se preencher, essa pessoa pode receber um aviso quando você pedir ajuda ou
               quando o barulho durar muito tempo.
             </p>
-            <Field rotulo="Nome do responsável" erro={erros.responsavelNome}>
+            <Field
+              rotulo="Nome do responsável"
+              descricao="Só letras, como Ana ou João da Silva."
+              erro={erros.responsavelNome}
+            >
               {(props) => (
                 <Input
                   {...props}
                   value={valores.responsavelNome}
-                  onChange={(e) => aoAlterar('responsavelNome', e.target.value)}
+                  onChange={(e) => aoAlterar('responsavelNome', limparNome(e.target.value))}
+                  onBlur={() => aoSairDoCampo('responsavelNome')}
                   maxLength={60}
                   autoComplete="off"
                 />
@@ -158,14 +173,15 @@ export function FormPerfil({
             </Field>
             <Field
               rotulo="E-mail ou telefone"
-              descricao="Ex.: nome@exemplo.com ou (11) 98765-4321"
+              descricao={DESCRICAO_CONTATO[tipoContato(valores.responsavelContato)]}
               erro={erros.responsavelContato}
             >
               {(props) => (
                 <Input
                   {...props}
                   value={valores.responsavelContato}
-                  onChange={(e) => aoAlterar('responsavelContato', e.target.value)}
+                  onChange={(e) => aoAlterar('responsavelContato', formatarContato(e.target.value))}
+                  onBlur={() => aoSairDoCampo('responsavelContato')}
                   maxLength={80}
                   autoComplete="off"
                 />

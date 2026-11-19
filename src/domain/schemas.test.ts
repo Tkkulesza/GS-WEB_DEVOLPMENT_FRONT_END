@@ -67,13 +67,33 @@ describe('PerfilInputSchema', () => {
   })
 })
 
-describe('contatoValido', () => {
-  it.each(['ana@exemplo.com', '(11) 98765-4321', '+55 11 98765-4321'])('%s é válido', (v) =>
-    expect(contatoValido(v)).toBe(true),
-  )
-  it.each(['ana@', '1234', 'liga pra mim'])('%s é inválido', (v) =>
-    expect(contatoValido(v)).toBe(false),
-  )
+describe('responsável no schema', () => {
+  const comResponsavel = {
+    ...entradaValida,
+    responsavelNome: 'Ana',
+    responsavelContato: '(11) 98765-4321',
+    consentimentoResponsavel: true,
+  }
+
+  it('aceita nome com letras e telefone formatado', () => {
+    expect(PerfilInputSchema.safeParse(comResponsavel).success).toBe(true)
+    expect(contatoValido('(11) 98765-4321')).toBe(true)
+  })
+
+  it('recusa nome feito de números', () => {
+    const r = PerfilInputSchema.safeParse({ ...comResponsavel, responsavelNome: '11111111111111' })
+    expect(r.success).toBe(false)
+    if (!r.success) expect(errosPorCampo(r.error).responsavelNome).toMatch(/só letras/)
+  })
+
+  it('recusa telefone inválido com mensagem de telefone', () => {
+    const r = PerfilInputSchema.safeParse({
+      ...comResponsavel,
+      responsavelContato: '111111111111111111',
+    })
+    expect(r.success).toBe(false)
+    if (!r.success) expect(errosPorCampo(r.error).responsavelContato).toMatch(/telefone/)
+  })
 })
 
 describe('NotaSchema', () => {

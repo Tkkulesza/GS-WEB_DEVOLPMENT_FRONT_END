@@ -58,6 +58,7 @@ function EditorPerfil({ perfil }: { perfil: Perfil | null }) {
       salvando={salvando}
       hrefCancelar="/perfis"
       aoAlterar={form.alterar}
+      aoSairDoCampo={form.validarCampo}
       aoAvancar={form.avancar}
       aoVoltar={form.voltar}
       aoConcluir={concluir}

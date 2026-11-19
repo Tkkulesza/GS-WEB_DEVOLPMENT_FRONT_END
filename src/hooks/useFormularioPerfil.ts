@@ -100,6 +100,26 @@ export function useFormularioPerfil(perfil?: Perfil | null) {
     [],
   )
 
+  /**
+   * Valida um campo quando a pessoa sai dele (sem esperar o "Salvar").
+   * Só mostra erro de campo já preenchido, para não reclamar do que ainda nem foi digitado.
+   */
+  const validarCampo = useCallback(
+    (campo: CampoFormPerfil) => {
+      const valor = valores[campo]
+      if (typeof valor === 'string' && valor.trim() === '') return
+      const erro = validarEtapa(ETAPA_DO_CAMPO[campo], valores)[campo]
+      setErros((atual) => {
+        if (erro) return { ...atual, [campo]: erro }
+        if (!(campo in atual)) return atual
+        const resto = { ...atual }
+        delete resto[campo]
+        return resto
+      })
+    },
+    [valores],
+  )
+
   /** Valida a etapa atual; se estiver tudo certo, avança. Devolve se avançou. */
   const avancar = useCallback((): boolean => {
     const novos = validarEtapa(etapa, valores)
@@ -139,5 +159,5 @@ export function useFormularioPerfil(perfil?: Perfil | null) {
     return null
   }, [valores])
 
-  return { valores, etapa, erros, alterar, avancar, voltar, concluir }
+  return { valores, etapa, erros, alterar, validarCampo, avancar, voltar, concluir }
 }

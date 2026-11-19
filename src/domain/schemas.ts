@@ -16,6 +16,7 @@ import {
   RESPONSAVEL_NOME_MAX,
   SONS_IDS,
 } from './constants'
+import { contatoValido, mensagemContatoInvalido, nomeValido } from './contato'
 import { temResponsavel } from './rules'
 import type { Perfil, PerfilInput, Registro, RegistroInput } from './types'
 
@@ -49,14 +50,8 @@ const dataIso = z.string().refine((v) => !Number.isNaN(Date.parse(v)), {
   error: 'Data em formato inesperado.',
 })
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-/** Aceita e-mail ou telefone brasileiro (10 a 13 dígitos, com ou sem DDI). */
-export function contatoValido(valor: string): boolean {
-  if (EMAIL_RE.test(valor)) return true
-  const digitos = valor.replace(/\D/g, '')
-  return /^[\d\s()+-]+$/.test(valor) && digitos.length >= 10 && digitos.length <= 13
-}
+/** Regras de nome e contato do responsável ficam em ./contato (reexportadas aqui). */
+export { contatoValido }
 
 // ---------- Campos do perfil (usados por etapa no formulário) ----------
 
@@ -115,6 +110,12 @@ export const PerfilInputSchema = z
         path: ['responsavelNome'],
         message: 'Escreva o nome do responsável, ou deixe os dois campos em branco.',
       })
+    } else if (!nomeValido(p.responsavelNome)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['responsavelNome'],
+        message: 'Use só letras no nome, como Ana ou João da Silva.',
+      })
     }
     if (!p.responsavelContato) {
       ctx.addIssue({
@@ -126,7 +127,7 @@ export const PerfilInputSchema = z
       ctx.addIssue({
         code: 'custom',
         path: ['responsavelContato'],
-        message: 'Use um e-mail (nome@exemplo.com) ou telefone com DDD.',
+        message: mensagemContatoInvalido(p.responsavelContato),
       })
     }
     if (!p.consentimentoResponsavel) {
