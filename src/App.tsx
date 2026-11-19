@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { ToastProvider } from './components/ui/Toast'
+import { PerfilAtivoProvider } from './context/PerfilAtivoContext'
 import { ConfiguracaoApiPage } from './pages/ConfiguracaoApiPage'
 import { HistoricoPage } from './pages/HistoricoPage'
 import { InicioPage } from './pages/InicioPage'
@@ -16,20 +17,22 @@ function App() {
 
   return (
     <ToastProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<InicioPage />} />
-            <Route path="historico" element={<HistoricoPage />} />
-            <Route path="perfis" element={<PerfisPage />} />
-            <Route path="perfis/novo" element={<PerfilFormPage />} />
-            <Route path="perfis/:id/editar" element={<PerfilFormPage />} />
-            <Route path="meus-dados" element={<MeusDadosPage />} />
-            <Route path="sobre" element={<SobrePage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <PerfilAtivoProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<InicioPage />} />
+              <Route path="historico" element={<HistoricoPage />} />
+              <Route path="perfis" element={<PerfisPage />} />
+              <Route path="perfis/novo" element={<PerfilFormPage />} />
+              <Route path="perfis/:id/editar" element={<PerfilFormPage />} />
+              <Route path="meus-dados" element={<MeusDadosPage />} />
+              <Route path="sobre" element={<SobrePage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </PerfilAtivoProvider>
     </ToastProvider>
   )
 }
