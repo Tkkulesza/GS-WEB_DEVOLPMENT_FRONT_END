@@ -4,6 +4,7 @@ import { BotaoModoCalma } from '../components/monitor/BotaoModoCalma'
 import { DecibelGauge } from '../components/monitor/DecibelGauge'
 import { FaixaBadge } from '../components/monitor/FaixaBadge'
 import { SeletorCenario } from '../components/monitor/SeletorCenario'
+import { SeletorFonte } from '../components/monitor/SeletorFonte'
 import { StatusBadge } from '../components/monitor/StatusBadge'
 import { AvisoErro } from '../components/ui/AvisoErro'
 import { Button } from '../components/ui/Button'
@@ -19,7 +20,7 @@ import { useTituloPagina } from '../hooks/useTituloPagina'
 export function InicioPage() {
   useTituloPagina('Início')
   const { perfilAtivo, carregando, erro, recarregar } = usePerfilAtivo()
-  const { monitor, protecao, cenario, setCenario } = useMonitor()
+  const { monitor, protecao, cenario, setCenario, escolherFonte } = useMonitor()
 
   if (carregando) {
     return (
@@ -48,6 +49,7 @@ export function InicioPage() {
 
   const limite = perfilAtivo.limiteDb
   const faixa = classificarFaixa(monitor.db, limite)
+  const usandoMicrofone = monitor.fonte === 'microfone'
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_minmax(0,24rem)] lg:items-start">
@@ -75,6 +77,9 @@ export function InicioPage() {
         <Card espacamento="lg" className="text-center">
           <h2 className="sr-only">Som ao seu redor</h2>
           <DecibelGauge db={monitor.db} limite={limite} faixa={faixa} />
+          {usandoMicrofone && (
+            <p className="mt-1 text-muted">Microfone · estimativa, não calibrada</p>
+          )}
           <div className="mt-4 flex justify-center">
             <FaixaBadge faixa={faixa} tamanho="lg" />
           </div>
@@ -104,16 +109,29 @@ export function InicioPage() {
             Modo demonstração
           </h2>
           <p className="mt-1 text-muted">
-            O sensor é simulado. Escolha um lugar para ver como o Hearmony reage.
+            {usandoMicrofone
+              ? 'O volume vem do microfone do aparelho.'
+              : 'O sensor é simulado. Escolha um lugar para ver como o Hearmony reage.'}
           </p>
         </div>
-        <SeletorCenario valor={cenario} aoMudar={setCenario} />
+        <SeletorCenario valor={cenario} aoMudar={setCenario} desabilitado={usandoMicrofone} />
         <div>
-          <Button variante="secondary" larguraTotal onClick={monitor.simularPico}>
+          <Button
+            variante="secondary"
+            larguraTotal
+            onClick={monitor.simularPico}
+            disabled={usandoMicrofone}
+          >
             Simular pico de barulho
           </Button>
           <p className="mt-2 text-muted">Simula 92 dB por 2 segundos, como uma buzina perto.</p>
         </div>
+        <SeletorFonte
+          fonte={monitor.fonte}
+          erroMicrofone={monitor.erroMicrofone}
+          aoUsarMicrofone={() => escolherFonte('microfone')}
+          aoUsarSimulador={() => escolherFonte('simulador')}
+        />
       </Card>
     </div>
   )

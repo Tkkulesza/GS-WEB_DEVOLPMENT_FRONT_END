@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react'
 import { CENARIO_PADRAO, type CenarioId } from '../domain/constants'
+import type { FonteMonitor } from '../domain/types'
 import { useNoiseMonitor } from '../hooks/useNoiseMonitor'
 import { usePerfilAtivo } from '../hooks/usePerfilAtivo'
 import { useProtecao } from '../hooks/useProtecao'
@@ -13,7 +14,17 @@ import { MonitorContext, type MonitorApi } from './monitor'
 export function MonitorProvider({ children }: { children: ReactNode }) {
   const { perfilAtivo } = usePerfilAtivo()
   const [cenario, setCenario] = useState<CenarioId>(CENARIO_PADRAO)
-  const monitor = useNoiseMonitor({ cenario })
+  const [fonte, setFonte] = useState<FonteMonitor>('simulador')
+  const monitor = useNoiseMonitor({ cenario, fonte })
+  const { limparErroMicrofone } = monitor
+
+  const escolherFonte = useCallback(
+    (f: FonteMonitor) => {
+      limparErroMicrofone() // nova tentativa (ou volta ao simulador) começa sem o erro anterior
+      setFonte(f)
+    },
+    [limparErroMicrofone],
+  )
   const { mostrar } = useToast()
 
   const aoAvisarResponsavel = useCallback(
@@ -38,8 +49,8 @@ export function MonitorProvider({ children }: { children: ReactNode }) {
   })
 
   const valor = useMemo<MonitorApi>(
-    () => ({ monitor, protecao, cenario, setCenario }),
-    [monitor, protecao, cenario],
+    () => ({ monitor, protecao, cenario, setCenario, escolherFonte }),
+    [monitor, protecao, cenario, escolherFonte],
   )
 
   return <MonitorContext.Provider value={valor}>{children}</MonitorContext.Provider>
