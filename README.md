@@ -265,5 +265,5 @@ Meta: **WCAG 2.1 AA**. O público é PcD.
 
 ## 12. Links
 
-- Repositório: `<preencher com o link do GitHub>`
+- Repositório: `https://github.com/Tkkulesza/GS-WEB_DEVOLPMENT_FRONT_END`
 - Uso de IA no projeto: [AI.md](./AI.md)
