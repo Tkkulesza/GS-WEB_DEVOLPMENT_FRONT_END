@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import { AnuncioProtecao } from './AnuncioProtecao'
 import { Header } from './Header'
 import { NavBar } from './NavBar'
 
@@ -13,6 +14,7 @@ export function Layout() {
       </a>
 
       <Header />
+      <AnuncioProtecao />
 
       <main
         id="conteudo"

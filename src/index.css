@@ -22,6 +22,19 @@
 
   --font-sans: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Rubik', ui-sans-serif, system-ui, sans-serif;
+
+  /* Respiração guiada: ciclo lento de 10 s (inspira 5 s, expira 5 s) */
+  --animate-respirar: respirar 10s ease-in-out infinite;
+
+  @keyframes respirar {
+    0%,
+    100% {
+      transform: scale(0.8);
+    }
+    50% {
+      transform: scale(1);
+    }
+  }
 }
 
 /* ---------- Base ---------- */

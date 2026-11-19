@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { AvisoProtecao } from '../components/monitor/AvisoProtecao'
 import { BotaoModoCalma } from '../components/monitor/BotaoModoCalma'
 import { DecibelGauge } from '../components/monitor/DecibelGauge'
 import { FaixaBadge } from '../components/monitor/FaixaBadge'
@@ -58,6 +59,19 @@ export function InicioPage() {
           <StatusBadge cancelamentoAtivo={protecao.ativa} />
         </div>
 
+        {protecao.ativa && (
+          <AvisoProtecao
+            db={monitor.db}
+            faixa={faixa}
+            motivo={protecao.motivo}
+            ligadaHaSeg={protecao.ligadaHaSeg}
+            podeAvisar={protecao.podeAvisar}
+            avisando={protecao.avisando}
+            aoDesativar={protecao.desativar}
+            aoAvisar={() => void protecao.pedirAjuda()}
+          />
+        )}
+
         <Card espacamento="lg" className="text-center">
           <h2 className="sr-only">Som ao seu redor</h2>
           <DecibelGauge db={monitor.db} limite={limite} faixa={faixa} />
@@ -74,11 +88,14 @@ export function InicioPage() {
           </p>
         </Card>
 
-        <BotaoModoCalma
-          cancelamentoAtivo={protecao.ativa}
-          aoAtivar={protecao.ativarModoCalma}
-          aoDesativar={protecao.desativar}
-        />
+        {/* Com a proteção ligada, o painel acima já oferece "Desativar". */}
+        {!protecao.ativa && (
+          <BotaoModoCalma
+            cancelamentoAtivo={false}
+            aoAtivar={protecao.ativarModoCalma}
+            aoDesativar={protecao.desativar}
+          />
+        )}
       </section>
 
       <Card as="section" aria-labelledby="titulo-demo" tom="neutro" className="space-y-5">
