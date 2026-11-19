@@ -45,6 +45,10 @@ export const SONS = [
 
 export const SONS_IDS = SONS.map((s) => s.id) as [SomId, ...SomId[]]
 export type SomId = (typeof SONS)[number]['id']
+export const ROTULO_SOM = Object.fromEntries(SONS.map((s) => [s.id, s.rotulo])) as Record<
+  SomId,
+  string
+>
 
 /** Referências textuais exibidas no slider de limite. */
 export const REFERENCIAS_LIMITE = [
