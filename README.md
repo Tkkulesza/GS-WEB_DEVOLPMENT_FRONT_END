@@ -199,7 +199,7 @@ O **modo microfone** só funciona em `https://` ou `http://localhost` (exigênci
 
 O `vercel.json` faz o rewrite da SPA (rotas como `/historico` funcionam ao recarregar) e define cabeçalhos de segurança: CSP liberando só o próprio site, Google Fonts e `*.mockapi.io`; `Permissions-Policy` com o microfone só para o próprio site; `X-Frame-Options`; `nosniff`. Se trocar de API, ajuste o `connect-src` da CSP.
 
-**Link do deploy:** `<preencher>`
+**Link do deploy:** https://hearmony-web.vercel.app
 
 ---
 
