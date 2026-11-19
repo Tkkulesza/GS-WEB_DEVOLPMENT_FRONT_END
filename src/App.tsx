@@ -1,13 +1,33 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Layout } from './components/layout/Layout'
+import { ConfiguracaoApiPage } from './pages/ConfiguracaoApiPage'
+import { HistoricoPage } from './pages/HistoricoPage'
+import { InicioPage } from './pages/InicioPage'
+import { MeusDadosPage } from './pages/MeusDadosPage'
+import { NotFoundPage } from './pages/NotFoundPage'
+import { PerfilFormPage } from './pages/PerfilFormPage'
+import { PerfisPage } from './pages/PerfisPage'
+import { SobrePage } from './pages/SobrePage'
+import { apiConfigurada } from './services/http'
+
 function App() {
+  if (!apiConfigurada()) return <ConfiguracaoApiPage />
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-stone-100 p-4 text-slate-900">
-      <div className="max-w-md rounded-3xl bg-white p-8 text-center shadow-sm">
-        <h1 className="text-3xl font-semibold">Hearmony</h1>
-        <p className="mt-3 text-base text-slate-600">
-          Projeto em construção. Vite, React, TypeScript e Tailwind estão funcionando.
-        </p>
-      </div>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<InicioPage />} />
+          <Route path="historico" element={<HistoricoPage />} />
+          <Route path="perfis" element={<PerfisPage />} />
+          <Route path="perfis/novo" element={<PerfilFormPage />} />
+          <Route path="perfis/:id/editar" element={<PerfilFormPage />} />
+          <Route path="meus-dados" element={<MeusDadosPage />} />
+          <Route path="sobre" element={<SobrePage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

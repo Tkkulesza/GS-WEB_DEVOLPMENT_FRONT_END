@@ -1,1 +1,57 @@
 @import 'tailwindcss';
+
+/* ---------- Tema Hearmony ---------- */
+@theme {
+  --color-ink: #1b2236;
+  --color-paper: #f5f2ec;
+  --color-paper2: #eae5da;
+  --color-card: #fbfaf6;
+  --color-line: #dcd5c7;
+  --color-muted: #4a5064;
+
+  --color-teal: #1f7a6e;
+  --color-teal-dark: #174f48;
+  --color-teal-soft: #e2f0ee;
+
+  --color-coral: #a8432d;
+  --color-coral-soft: #f6e1da;
+
+  --font-sans: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Rubik', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper font-sans text-base text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-ink;
+  }
+
+  /* Foco sempre visível, com contraste alto sobre qualquer fundo do tema */
+  :focus-visible {
+    outline: 3px solid var(--color-teal-dark);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+}
+
+/* ---------- Interface sensorialmente segura (RNF03) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
