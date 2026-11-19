@@ -68,9 +68,9 @@ export function DecibelGauge({ db, limite, faixa }: DecibelGaugeProps) {
         )}
       </svg>
       <p className="absolute inset-x-0 bottom-0 text-center font-display text-ink">
+        <span className="sr-only">Volume agora: </span>
         <span className="text-6xl font-semibold tabular-nums">{Math.round(db)}</span>
         <span className="ml-1 text-2xl">dB</span>
-        <span className="sr-only">: volume agora</span>
       </p>
     </div>
   )

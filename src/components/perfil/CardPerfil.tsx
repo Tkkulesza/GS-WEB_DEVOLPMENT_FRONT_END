@@ -29,7 +29,7 @@ export function CardPerfil({
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h2 className="text-xl font-semibold break-words">{perfil.apelido}</h2>
         {ativo && (
-          <span className="rounded-full bg-teal px-3 py-1 text-sm font-semibold text-white">
+          <span className="rounded-full bg-teal px-3 py-1 text-base font-semibold text-white">
             Em uso
           </span>
         )}

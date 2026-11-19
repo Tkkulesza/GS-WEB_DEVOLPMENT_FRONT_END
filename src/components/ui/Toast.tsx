@@ -17,13 +17,22 @@ interface ToastProps {
 }
 
 function Toast({ item, aoFechar }: ToastProps) {
+  // Pausa enquanto o mouse ou o foco estiver no aviso, para dar tempo de ler.
+  const [pausado, setPausado] = useState(false)
+
   useEffect(() => {
+    if (pausado) return
     const id = setTimeout(() => aoFechar(item.id), DURACAO_MS)
     return () => clearTimeout(id)
-  }, [item.id, aoFechar])
+  }, [item.id, aoFechar, pausado])
 
   return (
     <li
+      // Revisado (a11y): mouse e foco só pausam o tempo do aviso; não disparam ação.
+      onMouseEnter={() => setPausado(true)}
+      onMouseLeave={() => setPausado(false)}
+      onFocus={() => setPausado(true)}
+      onBlur={() => setPausado(false)}
       className={`flex items-start justify-between gap-3 rounded-2xl border-2 p-4 text-ink shadow-sm ${ESTILOS[item.tipo]}`}
     >
       <p className="pt-2">{item.mensagem}</p>

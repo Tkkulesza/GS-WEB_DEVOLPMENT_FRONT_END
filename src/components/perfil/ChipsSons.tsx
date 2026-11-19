@@ -33,7 +33,7 @@ export function ChipsSons({ selecionados, aoMudar, idRotulo, idErro, erro }: Chi
                 className={`flex min-h-12 cursor-pointer items-center gap-2 rounded-full border-2 px-4 font-semibold has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-teal-dark ${
                   marcado
                     ? 'border-teal bg-teal text-white'
-                    : 'border-line bg-card text-ink hover:border-teal'
+                    : 'border-line-strong bg-card text-ink hover:border-teal'
                 }`}
               >
                 <input

@@ -28,7 +28,7 @@ export function GraficoSemana({ dias, totalMinutos }: GraficoSemanaProps) {
           const ehHoje = d.data === hoje
           return (
             <li key={d.data} className="flex h-full flex-col items-center justify-end gap-1">
-              <span className="text-sm font-semibold tabular-nums sm:text-base">
+              <span className="text-base font-semibold tabular-nums">
                 {d.minutos}
                 <span className="sr-only"> minutos</span>
               </span>
@@ -40,7 +40,7 @@ export function GraficoSemana({ dias, totalMinutos }: GraficoSemanaProps) {
                   style={d.minutos === 0 ? undefined : { height: `${altura}%` }}
                 />
               </div>
-              <span className={`text-sm sm:text-base ${ehHoje ? 'font-semibold' : 'text-muted'}`}>
+              <span className={`text-base ${ehHoje ? 'font-semibold' : 'text-muted'}`}>
                 {ehHoje ? 'hoje' : d.rotulo}
               </span>
             </li>

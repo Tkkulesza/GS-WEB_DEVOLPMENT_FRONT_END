@@ -1,9 +1,14 @@
+import { useRef } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useFocoAoNavegar } from '../../hooks/useFocoAoNavegar'
 import { AnuncioProtecao } from './AnuncioProtecao'
 import { Header } from './Header'
 import { NavBar } from './NavBar'
 
 export function Layout() {
+  const principal = useRef<HTMLElement>(null)
+  useFocoAoNavegar(principal)
+
   return (
     <div className="flex min-h-dvh flex-col">
       <a
@@ -17,6 +22,7 @@ export function Layout() {
       <AnuncioProtecao />
 
       <main
+        ref={principal}
         id="conteudo"
         tabIndex={-1}
         className="mx-auto w-full max-w-md flex-1 px-4 pt-6 pb-28 outline-none lg:max-w-5xl lg:pb-12"

@@ -7,6 +7,8 @@
   --color-paper2: #eae5da;
   --color-card: #fbfaf6;
   --color-line: #dcd5c7;
+  /* Borda de controles (campos, chips, opções): ≥ 3:1 sobre os fundos (WCAG 1.4.11) */
+  --color-line-strong: #837b6b;
   --color-muted: #4a5064;
 
   --color-teal: #1f7a6e;
@@ -58,6 +60,12 @@
     outline: 3px solid var(--color-teal-dark);
     outline-offset: 3px;
     border-radius: 0.5rem;
+  }
+
+  /* Títulos e regiões que recebem foco por programa (troca de rota, pós-exclusão):
+     não são controles, então não precisam do anel de foco. */
+  [tabindex='-1']:focus {
+    outline: none;
   }
 }
 

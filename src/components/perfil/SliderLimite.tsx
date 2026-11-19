@@ -46,7 +46,7 @@ export function SliderLimite({ valor, aoMudar, erro }: SliderLimiteProps) {
           type="button"
           onClick={() => aoMudar(limitar(valor - 1))}
           disabled={valor <= LIMITE_MIN_DB}
-          className="flex size-12 shrink-0 items-center justify-center rounded-2xl border-2 border-line bg-card text-2xl font-semibold hover:border-teal disabled:opacity-50"
+          className="flex size-12 shrink-0 items-center justify-center rounded-2xl border-2 border-line-strong bg-card text-2xl font-semibold hover:border-teal disabled:opacity-50"
         >
           <span aria-hidden="true">−</span>
           <span className="sr-only">Diminuir 1 dB</span>
@@ -68,7 +68,7 @@ export function SliderLimite({ valor, aoMudar, erro }: SliderLimiteProps) {
           type="button"
           onClick={() => aoMudar(limitar(valor + 1))}
           disabled={valor >= LIMITE_MAX_DB}
-          className="flex size-12 shrink-0 items-center justify-center rounded-2xl border-2 border-line bg-card text-2xl font-semibold hover:border-teal disabled:opacity-50"
+          className="flex size-12 shrink-0 items-center justify-center rounded-2xl border-2 border-line-strong bg-card text-2xl font-semibold hover:border-teal disabled:opacity-50"
         >
           <span aria-hidden="true">+</span>
           <span className="sr-only">Aumentar 1 dB</span>

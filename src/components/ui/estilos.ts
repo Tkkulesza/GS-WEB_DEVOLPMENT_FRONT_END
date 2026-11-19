@@ -31,4 +31,4 @@ export function classesBotao(
 }
 
 export const CLASSES_INPUT =
-  'block w-full min-h-12 rounded-2xl border-2 border-line bg-card px-4 py-2 text-base text-ink placeholder:text-muted/80 hover:border-muted/50 focus:border-teal aria-[invalid=true]:border-coral'
+  'block w-full min-h-12 rounded-2xl border-2 border-line-strong bg-card px-4 py-2 text-base text-ink placeholder:text-muted hover:border-ink focus:border-teal aria-[invalid=true]:border-coral'

@@ -86,6 +86,8 @@ export function Modal({
         e.preventDefault() // o estado de "aberto" é controlado pelo React
         if (!bloqueado) aoFechar()
       }}
+      // Revisado (a11y): o <dialog> escuta o teclado só para prender o Tab, e o clique
+      // só para fechar pelo fundo; Esc é a alternativa de teclado para fechar.
       onKeyDown={prenderFoco}
       onClick={(e) => {
         // Clique no fundo escurecido (fora do conteúdo) fecha.

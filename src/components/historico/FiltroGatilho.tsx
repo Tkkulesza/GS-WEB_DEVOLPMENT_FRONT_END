@@ -24,7 +24,7 @@ export function FiltroGatilho({ valor, aoMudar }: FiltroGatilhoProps) {
             className={`flex min-h-11 cursor-pointer items-center rounded-full border-2 px-4 font-semibold has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-teal-dark ${
               o.valor === valor
                 ? 'border-teal bg-teal text-white'
-                : 'border-line bg-card hover:border-teal'
+                : 'border-line-strong bg-card hover:border-teal'
             }`}
           >
             <input
@@ -34,6 +34,11 @@ export function FiltroGatilho({ valor, aoMudar }: FiltroGatilhoProps) {
               checked={o.valor === valor}
               onChange={() => aoMudar(o.valor)}
             />
+            {o.valor === valor && (
+              <span aria-hidden="true" className="mr-1.5">
+                ✓
+              </span>
+            )}
             {o.rotulo}
           </label>
         ))}

@@ -18,7 +18,9 @@ export function SeletorCenario({ valor, aoMudar, desabilitado = false }: Seletor
             <label
               key={c.id}
               className={`flex min-h-12 cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 px-4 py-2 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-teal-dark ${
-                marcado ? 'border-teal bg-teal-soft' : 'border-line bg-card hover:border-teal'
+                marcado
+                  ? 'border-teal bg-teal-soft'
+                  : 'border-line-strong bg-card hover:border-teal'
               }`}
             >
               <span className="flex items-center gap-3">

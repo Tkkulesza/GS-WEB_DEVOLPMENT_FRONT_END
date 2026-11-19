@@ -23,7 +23,11 @@ export function Checkbox({ marcado, aoMudar, rotulo, descricao, erro, disabled }
       <label
         htmlFor={id}
         className={`flex min-h-11 cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 ${
-          erro ? 'border-coral' : marcado ? 'border-teal bg-teal-soft' : 'border-line bg-card'
+          erro
+            ? 'border-coral'
+            : marcado
+              ? 'border-teal bg-teal-soft'
+              : 'border-line-strong bg-card'
         }`}
       >
         <input

@@ -28,15 +28,23 @@ export function NavBar({ variante, className = '' }: NavBarProps) {
               className={({ isActive }) =>
                 [
                   'flex min-h-11 items-center justify-center rounded-2xl font-semibold transition-colors',
-                  inferior ? 'min-h-16 flex-col gap-1 px-1 text-sm' : 'gap-2 px-4 py-2 text-base',
+                  inferior
+                    ? 'min-h-16 flex-col gap-1 px-1 text-base leading-tight'
+                    : 'gap-2 px-4 py-2 text-base',
                   isActive
                     ? 'bg-teal-soft text-teal-dark'
                     : 'text-muted hover:bg-paper2 hover:text-ink',
                 ].join(' ')
               }
             >
-              <Icone nome={item.icone} className={inferior ? 'size-6' : 'size-5'} />
-              <span>{item.rotulo}</span>
+              {({ isActive }) => (
+                <>
+                  <Icone nome={item.icone} className={inferior ? 'size-6' : 'size-5'} />
+                  <span className={isActive ? 'underline decoration-2 underline-offset-4' : ''}>
+                    {item.rotulo}
+                  </span>
+                </>
+              )}
             </NavLink>
           </li>
         ))}
