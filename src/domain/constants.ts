@@ -52,9 +52,9 @@ export const ROTULO_SOM = Object.fromEntries(SONS.map((s) => [s.id, s.rotulo])) 
 
 /** Referências textuais exibidas no slider de limite. */
 export const REFERENCIAS_LIMITE = [
-  { db: 40, rotulo: 'biblioteca' },
-  { db: 68, rotulo: 'rua movimentada' },
-  { db: 90, rotulo: 'obra' },
+  { db: 40, rotulo: 'biblioteca', comparacao: 'uma biblioteca' },
+  { db: 68, rotulo: 'rua movimentada', comparacao: 'uma rua movimentada' },
+  { db: 90, rotulo: 'obra', comparacao: 'uma obra' },
 ] as const
 
 // ---------- Simulador de sensor ----------
