@@ -19,6 +19,13 @@ export type OrigemLeitura = CenarioId | 'microfone'
 
 export type FonteMonitor = 'simulador' | 'microfone'
 
+/** Uma leitura do sensor. `seq` muda a cada leitura, mesmo que o valor se repita. */
+export interface Leitura {
+  db: number
+  em: number
+  seq: number
+}
+
 export interface Perfil {
   id: string
   apelido: string
