@@ -1,7 +1,8 @@
 import { formatarDuracao } from '../../domain/stats'
-import { ROTULO_GATILHO, rotuloOrigem } from '../../domain/rotulos'
-import type { Registro } from '../../domain/types'
+import { rotuloOrigem } from '../../domain/rotulos'
+import type { Gatilho, Registro } from '../../domain/types'
 import { Button } from '../ui/Button'
+import { Icone, type NomeIcone } from '../ui/Icone'
 import { formatarDiaHora } from './formatos'
 
 interface ItemRegistroProps {
@@ -10,52 +11,71 @@ interface ItemRegistroProps {
   aoExcluir: (r: Registro) => void
 }
 
+/** Título, ícone e cor por tipo. A cor nunca é a única informação: há título e ícone. */
+const VISUAL: Record<Gatilho, { titulo: string; icone: NomeIcone; cor: string }> = {
+  automatico: { titulo: 'Ligou sozinho', icone: 'ondas', cor: 'bg-teal-soft text-teal-dark' },
+  pico: { titulo: 'Pico de barulho', icone: 'raio', cor: 'bg-coral-soft text-coral' },
+  modo_calma: { titulo: 'Modo Calma', icone: 'coracao', cor: 'bg-teal-soft text-teal-dark' },
+  ajuda: { titulo: 'Você pediu ajuda', icone: 'sino', cor: 'bg-amber-soft text-amber' },
+  persistente: {
+    titulo: 'Barulho alto por muito tempo',
+    icone: 'sino',
+    cor: 'bg-amber-soft text-amber',
+  },
+}
+
 export function ItemRegistro({ registro, aoEditarNota, aoExcluir }: ItemRegistroProps) {
   const ehAlerta = registro.categoria === 'alerta'
-  const titulo = ehAlerta ? 'Aviso ao responsável' : 'Cancelamento ativado'
-  const origem = rotuloOrigem(registro.cenario)
+  const visual = VISUAL[registro.gatilho ?? 'automatico']
+  const quando = formatarDiaHora(registro.inicio)
 
   const detalhes = [
-    registro.gatilho ? ROTULO_GATILHO[registro.gatilho] : null,
     registro.duracaoSeg !== null && !ehAlerta ? formatarDuracao(registro.duracaoSeg) : null,
     registro.picoDb !== null ? `pico de ${registro.picoDb} dB` : null,
-    origem,
+    rotuloOrigem(registro.cenario),
   ].filter(Boolean)
 
   return (
-    <li className="rounded-3xl border border-line bg-card p-5">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-        <h3 className="text-lg font-semibold">{titulo}</h3>
-        <p className="text-muted">{formatarDiaHora(registro.inicio)}</p>
-      </div>
-      <p className="mt-1">{detalhes.join(' · ')}</p>
+    <li className="flex gap-3 rounded-2xl border border-line bg-card p-4">
+      <span
+        className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${visual.cor}`}
+        aria-hidden="true"
+      >
+        <Icone nome={visual.icone} className="size-6" />
+      </span>
 
-      {!ehAlerta && (
-        <p className={`mt-3 rounded-2xl ${registro.nota ? 'bg-paper p-3' : 'text-muted'}`}>
-          {registro.nota ? (
-            <>
-              <span className="sr-only">Sua nota: </span>“{registro.nota}”
-            </>
-          ) : (
-            'Sem nota.'
-          )}
-        </p>
-      )}
-
-      <div className="mt-4 flex flex-wrap gap-2">
-        {!ehAlerta && (
-          <Button variante="secondary" tamanho="sm" onClick={() => aoEditarNota(registro)}>
-            {registro.nota ? 'Editar nota' : 'Escrever como me senti'}
-          </Button>
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3">
+          <h3 className="font-semibold">
+            <span className="sr-only">
+              {ehAlerta ? 'Aviso ao responsável: ' : 'Cancelamento ativado: '}
+            </span>
+            {visual.titulo}
+          </h3>
+          <p className="text-muted">{quando}</p>
+        </div>
+        {detalhes.length > 0 && <p className="text-muted">{detalhes.join(' · ')}</p>}
+        {registro.nota && (
+          <p className="mt-2 border-l-4 border-teal/40 pl-3">
+            <span className="sr-only">Sua nota: </span>“{registro.nota}”
+          </p>
         )}
-        <Button
-          variante="danger-ghost"
-          tamanho="sm"
-          onClick={() => aoExcluir(registro)}
-          aria-label={`Excluir registro de ${formatarDiaHora(registro.inicio)}`}
-        >
-          Excluir
-        </Button>
+
+        <div className="mt-2 -ml-3 flex flex-wrap">
+          {!ehAlerta && (
+            <Button variante="ghost" tamanho="sm" onClick={() => aoEditarNota(registro)}>
+              {registro.nota ? 'Editar nota' : 'Escrever como me senti'}
+            </Button>
+          )}
+          <Button
+            variante="danger-ghost"
+            tamanho="sm"
+            onClick={() => aoExcluir(registro)}
+            aria-label={`Excluir registro de ${quando}`}
+          >
+            Excluir
+          </Button>
+        </div>
       </div>
     </li>
   )

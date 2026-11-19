@@ -34,17 +34,17 @@ FIAP · Global Solution 2026.2 · **Front-end Design** e **Web Development**
 
 ### Mapa de funcionalidades → telas
 
-| Funcionalidade                                                           | Tela / rota                     |
-| ------------------------------------------------------------------------ | ------------------------------- |
-| Medidor de volume em tempo real (simulador ou microfone), faixa e limite | Início `/`                      |
-| Proteção automática (RN01–RN03), Modo Calma, aviso "Proteção ativada"    | Início `/`                      |
-| Alerta ao responsável (RF08 + RN05), simulado                            | Início `/` (painel de proteção) |
-| Cadastro de perfil em 4 etapas (apelido, sons, limite, responsável/LGPD) | `/perfis/novo`                  |
-| Listar, escolher, editar e excluir perfis (exclusão em cascata)          | `/perfis`, `/perfis/:id/editar` |
-| Gráfico semanal, momento mais alto, contagem de ativações                | Histórico `/historico`          |
-| Listar, filtrar, editar nota ("como me senti") e excluir registros       | Histórico `/historico`          |
-| Exportar dados (JSON), atividade da conta (auditoria), excluir tudo      | Meus dados `/meus-dados`        |
-| O problema, como funciona, equipe                                        | Sobre `/sobre`                  |
+| Funcionalidade                                                                                             | Tela / rota                     |
+| ---------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| Medidor de volume em tempo real (simulador ou microfone), escala, faixa, limite e gráfico dos últimos 30 s | Início `/`                      |
+| Proteção automática (RN01–RN03), Modo Calma, aviso "Proteção ativada"                                      | Início `/`                      |
+| Alerta ao responsável (RF08 + RN05), simulado                                                              | Início `/` (painel de proteção) |
+| Cadastro de perfil em 4 etapas (apelido, sons, limite, responsável/LGPD)                                   | `/perfis/novo`                  |
+| Listar, escolher, editar e excluir perfis (exclusão em cascata)                                            | `/perfis`, `/perfis/:id/editar` |
+| Gráfico semanal, momento mais alto, contagem de ativações                                                  | Histórico `/historico`          |
+| Listar, filtrar, editar nota ("como me senti") e excluir registros                                         | Histórico `/historico`          |
+| Exportar dados (JSON), atividade da conta (auditoria), excluir tudo                                        | Meus dados `/meus-dados`        |
+| O problema, como funciona, equipe                                                                          | Sobre `/sobre`                  |
 
 ### CRUD na interface
 

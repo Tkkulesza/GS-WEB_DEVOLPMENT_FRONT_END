@@ -3,6 +3,7 @@ import { AvisoProtecao } from '../components/monitor/AvisoProtecao'
 import { BotaoModoCalma } from '../components/monitor/BotaoModoCalma'
 import { DecibelGauge } from '../components/monitor/DecibelGauge'
 import { FaixaBadge } from '../components/monitor/FaixaBadge'
+import { GraficoAoVivo } from '../components/monitor/GraficoAoVivo'
 import { SeletorCenario } from '../components/monitor/SeletorCenario'
 import { SeletorFonte } from '../components/monitor/SeletorFonte'
 import { StatusBadge } from '../components/monitor/StatusBadge'
@@ -113,6 +114,10 @@ export function InicioPage() {
             aoDesativar={protecao.desativar}
           />
         )}
+
+        <Card>
+          <GraficoAoVivo leituras={monitor.historicoCurto} limite={limite} />
+        </Card>
       </section>
 
       <Card as="section" aria-labelledby="titulo-demo" tom="neutro" className="space-y-5">
