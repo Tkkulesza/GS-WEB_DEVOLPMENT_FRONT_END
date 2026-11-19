@@ -1,0 +1,8 @@
+# Nunca enviar segredos nem artefatos locais para a Vercel
+.env
+.env.*
+!.env.example
+node_modules
+dist
+coverage
+.vercel
