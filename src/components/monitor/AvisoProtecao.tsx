@@ -2,6 +2,7 @@ import { ROTULO_FAIXA } from '../../domain/rules'
 import type { Faixa, MotivoProtecao } from '../../domain/types'
 import { Button } from '../ui/Button'
 import { COR_FAIXA } from './estilosFaixa'
+import { GuiaRespiracao } from './GuiaRespiracao'
 
 interface AvisoProtecaoProps {
   db: number
@@ -68,7 +69,10 @@ export function AvisoProtecao({
           <div className="size-32 animate-respirar rounded-full bg-teal/35" />
         </div>
       </div>
-      <p className="-mt-4 mb-6 text-muted">Se quiser, respire junto com o círculo.</p>
+      <p className="so-com-movimento -mt-4 mb-6 text-muted">
+        Se quiser, respire junto com o círculo.
+      </p>
+      <GuiaRespiracao />
 
       <p className="font-semibold text-teal-dark">
         Ligado há <span className="tabular-nums">{formatarTempo(ligadaHaSeg)}</span>

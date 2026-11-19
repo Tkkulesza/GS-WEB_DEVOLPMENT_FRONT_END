@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { usePreferencias } from '../../hooks/usePreferencias'
-import type { TamanhoTexto, Tema } from '../../services/preferencias'
+import type { Movimento, TamanhoTexto, Tema } from '../../services/preferencias'
 import { Button } from '../ui/Button'
 import { GrupoOpcoes } from '../ui/GrupoOpcoes'
 import { Icone } from '../ui/Icone'
@@ -25,7 +25,24 @@ const TAMANHOS: { valor: TamanhoTexto; rotulo: string }[] = [
 /** Botão do cabeçalho que abre os ajustes de conforto visual. */
 export function AjustesVisuais() {
   const [aberto, setAberto] = useState(false)
-  const { preferencias, mudarTema, mudarTexto } = usePreferencias()
+  const { preferencias, aparelhoPedeMenosMovimento, mudarTema, mudarTexto, mudarMovimento } =
+    usePreferencias()
+
+  const movimentos: { valor: Movimento; rotulo: string; descricao: string }[] = [
+    {
+      valor: 'sistema',
+      rotulo: 'Igual ao aparelho',
+      descricao: aparelhoPedeMenosMovimento
+        ? 'Seu aparelho está pedindo menos movimento: a respiração fica parada e é guiada por texto.'
+        : 'Seu aparelho permite animações: o círculo de respiração se mexe devagar.',
+    },
+    {
+      valor: 'ligado',
+      rotulo: 'Com respiração animada',
+      descricao: 'Só o círculo de respiração se mexe, num ritmo lento de 10 segundos.',
+    },
+    { valor: 'desligado', rotulo: 'Sem movimento', descricao: 'Nada se mexe na tela.' },
+  ]
 
   return (
     <>
@@ -59,6 +76,12 @@ export function AjustesVisuais() {
             valor={preferencias.texto}
             aoMudar={mudarTexto}
             disposicao="linha"
+          />
+          <GrupoOpcoes
+            legenda="Movimento"
+            opcoes={movimentos}
+            valor={preferencias.movimento}
+            aoMudar={mudarMovimento}
           />
         </div>
       </Modal>

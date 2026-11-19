@@ -141,4 +141,43 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Exceção escolhida pela pessoa em Ajustes: só a respiração guiada se mexe, devagar. */
+  :root[data-movimento='ligado'] .animate-respirar {
+    animation-duration: 10s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* "Sem movimento" em Ajustes: vale mesmo que o aparelho permita animações. */
+:root[data-movimento='desligado'] *,
+:root[data-movimento='desligado'] *::before,
+:root[data-movimento='desligado'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Conteúdo que só aparece com ou sem movimento (ex.: guia da respiração em texto). */
+.so-sem-movimento {
+  display: none;
+}
+
+:root[data-movimento='desligado'] .so-sem-movimento {
+  display: block;
+}
+
+:root[data-movimento='desligado'] .so-com-movimento {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-movimento='ligado']) .so-sem-movimento {
+    display: block;
+  }
+
+  :root:not([data-movimento='ligado']) .so-com-movimento {
+    display: none;
+  }
 }

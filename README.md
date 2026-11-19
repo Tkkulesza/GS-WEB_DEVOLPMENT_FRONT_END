@@ -257,7 +257,7 @@ Meta: **WCAG 2.1 AA**. O público é PcD.
 - **Anúncios** com `aria-live="polite"`, nunca `assertive`: mudança de faixa, proteção ligada e desligada, avisos.
 - **Interface sensorialmente segura (RNF03)**: nenhum som, nenhum flash, nada piscando. A respiração guiada tem ciclo de 10 s, e todas as animações param com `prefers-reduced-motion`.
 - **Nunca só cor**: faixas com texto e forma; seleção com ✓; página atual sublinhada.
-- **Conforto visual** (botão "Ajustes" no topo): tela **Suave** (escura, com menos brilho) ou **Clara**, ou igual ao aparelho; **tamanho do texto** Normal, Grande ou Maior. A escolha fica salva só neste navegador. Os dois temas foram medidos (texto ≥ 4,5:1) e auditados com axe.
+- **Conforto visual** (botão "Ajustes" no topo): tela **Suave** (escura, com menos brilho) ou **Clara**, ou igual ao aparelho; **tamanho do texto** Normal, Grande ou Maior; **movimento**: igual ao aparelho, "com respiração animada" (só o círculo de respiração se mexe, devagar) ou "sem movimento". Sem movimento, a respiração é guiada por texto ("Inspire devagar…" / "Solte o ar devagar…", a cada 5 s). A escolha fica salva só neste navegador. Os dois temas foram medidos (texto ≥ 4,5:1) e auditados com axe.
 - **Alvos de toque** ≥ 44 px, **textos** ≥ 16 px, HTML semântico, `lang="pt-BR"` e título por rota.
 - **Tom de voz** calmo e direto, sem exclamação e sem culpar a pessoa ("Não conseguimos falar com o servidor. Vamos tentar de novo?").
 
